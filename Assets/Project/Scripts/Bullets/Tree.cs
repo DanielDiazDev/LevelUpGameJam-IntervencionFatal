@@ -1,6 +1,6 @@
 using UnityEngine;
-
-public class Tree : MonoBehaviour
+using Project.Scripts.Bullets;
+public class Tree : SpawnedProjectile
 {
     [SerializeField] private GameObject Past;
     [SerializeField] private GameObject Future;

@@ -21,22 +21,17 @@ namespace Project.Scripts.Player
         [SerializeField] private InputReader inputReader;
         private Rigidbody rb;
 
-        [SerializeField] private GameObject TreePrefab;
-
         private void OnEnable()
         {
             inputReader.Initialize(); //TODO: Ponerlo luego en un manager
             inputReader.Move += OnMove;
             inputReader.Jump += OnJump;
-            inputReader.Attack += OnAttack;
-
         }
 
         private void OnDisable()
         {
             inputReader.Move -= OnMove;
             inputReader.Jump -= OnJump;
-            inputReader.Attack -= OnAttack;
         }
 
         private void Start()
@@ -87,19 +82,6 @@ namespace Project.Scripts.Player
         {
             Gizmos.color = Color.red;
             Gizmos.DrawRay(transform.position, Vector3.down * groundDistance);
-        }
-
-        private void OnAttack()
-        {
-            //TODO verificar si estamos en modo árbol y si tenemos semillas disponibles
-            if (isGrounded)
-            {
-                GameObject instance = Instantiate(TreePrefab, transform.position, Quaternion.identity);
-            }
-            else
-            {
-                GameObject.FindAnyObjectByType<Tree>()?.OnFuture();
-            }
         }
     }
 }
