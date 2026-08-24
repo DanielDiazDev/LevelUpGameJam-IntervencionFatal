@@ -161,13 +161,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Scripts.Player.PlayerController
   moveSpeed: 10
   smoothness: 1
-  jumpForce: 5
+  jumpForce: 8
   isGrounded: 0
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
   groundDistance: 0.4
   inputReader: {fileID: 11400000, guid: d347751a5678b0c4aae13b06c9a70d7e, type: 2}
+  TreePrefab: {fileID: 6931643263676183046, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
 --- !u!136 &7708636670332034474
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -217,7 +218,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &8914536401971188977
 GameObject:
   m_ObjectHideFlags: 0

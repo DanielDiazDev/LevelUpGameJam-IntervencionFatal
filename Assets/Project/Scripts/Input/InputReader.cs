@@ -10,13 +10,14 @@ namespace Project.Scripts.Input
         private InputSystem_Actions inputActions;
         public event Action<Vector2> Move;
         public event Action Jump;
+        public event Action Attack;
         public void Initialize()
         {
             if (inputActions == null)
             {
                 inputActions = new InputSystem_Actions();
                 inputActions.Player.SetCallbacks(this);
-               // inputActions.UI.SetCallbacks(this);
+                // inputActions.UI.SetCallbacks(this);
             }
             EnablePlayerActions();
         }
@@ -41,6 +42,10 @@ namespace Project.Scripts.Input
 
         public void OnAttack(InputAction.CallbackContext context)
         {
+            if (context.performed)
+            {
+                Attack?.Invoke();
+            }
         }
 
         public void OnInteract(InputAction.CallbackContext context)

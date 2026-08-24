@@ -20,12 +20,15 @@ namespace Project.Scripts.Player
         [Header("Input")]
         [SerializeField] private InputReader inputReader;
         private Rigidbody rb;
-        
+
+        [SerializeField] private GameObject TreePrefab;
+
         private void OnEnable()
         {
             inputReader.Initialize(); //TODO: Ponerlo luego en un manager
             inputReader.Move += OnMove;
             inputReader.Jump += OnJump;
+            inputReader.Attack += OnAttack;
 
         }
 
@@ -33,6 +36,7 @@ namespace Project.Scripts.Player
         {
             inputReader.Move -= OnMove;
             inputReader.Jump -= OnJump;
+            inputReader.Attack -= OnAttack;
         }
 
         private void Start()
@@ -51,9 +55,9 @@ namespace Project.Scripts.Player
         private void FixedUpdate()
         {
             CheckGrounded();
-           // rb.linearVelocity = new Vector2(moveInput.x *  moveSpeed, rb.linearVelocity.y);
-           Vector2 targetVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
-           rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, smoothness);
+            // rb.linearVelocity = new Vector2(moveInput.x *  moveSpeed, rb.linearVelocity.y);
+            Vector2 targetVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, smoothness);
         }
 
         private void CheckGrounded()
@@ -74,7 +78,7 @@ namespace Project.Scripts.Player
         private void Flip()
         {
             facingRight = !facingRight;
-            var scale =  transform.localScale;
+            var scale = transform.localScale;
             scale.x *= -1;
             transform.localScale = scale;
         }
@@ -83,6 +87,19 @@ namespace Project.Scripts.Player
         {
             Gizmos.color = Color.red;
             Gizmos.DrawRay(transform.position, Vector3.down * groundDistance);
+        }
+
+        private void OnAttack()
+        {
+            //TODO verificar si estamos en modo árbol y si tenemos semillas disponibles
+            if (isGrounded)
+            {
+                GameObject instance = Instantiate(TreePrefab, transform.position, Quaternion.identity);
+            }
+            else
+            {
+                GameObject.FindAnyObjectByType<Tree>()?.OnFuture();
+            }
         }
     }
 }
