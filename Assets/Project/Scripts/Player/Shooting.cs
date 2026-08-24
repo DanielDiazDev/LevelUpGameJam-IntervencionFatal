@@ -87,7 +87,9 @@ namespace Project.Scripts.Player
                 projectileOrigin.rotation = Quaternion.Euler(0, 0, rotZ);
                 var projObj = Instantiate(projectilePrefabs[currentProjectileIndex]);
                 var proj = projObj.GetComponent<ProjectileBase>();
-                proj.Initialize(projectileOrigin.position, direction);
+                
+                proj.Initialize(currentProjectileIndex is 0 or 2 ? 
+                    projectileOrigin.position : transform.position, direction);
                 
             }
         }

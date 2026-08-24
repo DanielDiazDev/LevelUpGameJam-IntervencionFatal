@@ -20,6 +20,7 @@ namespace Project.Scripts.Player
         [Header("Input")]
         [SerializeField] private InputReader inputReader;
         private Rigidbody rb;
+        public Rigidbody Rb => rb;
 
         private void OnEnable()
         {

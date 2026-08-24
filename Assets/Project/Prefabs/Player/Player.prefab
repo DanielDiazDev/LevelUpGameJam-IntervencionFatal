@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 3291309128149087235}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -293,7 +293,6 @@ MonoBehaviour:
     m_Bits: 8
   groundDistance: 0.4
   inputReader: {fileID: 11400000, guid: d347751a5678b0c4aae13b06c9a70d7e, type: 2}
-  TreePrefab: {fileID: 6931643263676183046, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
 --- !u!114 &3715055314936596714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -315,7 +314,7 @@ MonoBehaviour:
   inputReader: {fileID: 11400000, guid: d347751a5678b0c4aae13b06c9a70d7e, type: 2}
   projectilePrefabs:
   - {fileID: 8992740016015064027, guid: fc284032a1c435a4391d59112581e6e5, type: 3}
-  - {fileID: 0}
+  - {fileID: 8992740016015064027, guid: 193466bddce9e8f4493d7beee7d150f8, type: 3}
   - {fileID: 0}
   - {fileID: 6931643263676183046, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
 --- !u!136 &7708636670332034474
