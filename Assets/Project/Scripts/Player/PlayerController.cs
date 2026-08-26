@@ -19,6 +19,8 @@ namespace Project.Scripts.Player
         [SerializeField] private float groundDistance = 0.4f;
         [Header("Input")]
         [SerializeField] private InputReader inputReader;
+        [Header("Animator")]
+        [SerializeField] private Animator animator;
         private Rigidbody rb;
         public Rigidbody Rb => rb;
 
@@ -26,13 +28,13 @@ namespace Project.Scripts.Player
         {
             inputReader.Initialize(); //TODO: Ponerlo luego en un manager
             inputReader.Move += OnMove;
-            inputReader.Jump += OnJump;
+          //  inputReader.Jump += OnJump;
         }
 
         private void OnDisable()
         {
             inputReader.Move -= OnMove;
-            inputReader.Jump -= OnJump;
+          //  inputReader.Jump -= OnJump;
         }
 
         private void Start()
@@ -42,6 +44,7 @@ namespace Project.Scripts.Player
 
         private void Update()
         {
+            animator.SetFloat("MoveX", Mathf.Abs(moveInput.x));
             if (moveInput.x > 0 && !facingRight || moveInput.x < 0 && facingRight)
             {
                 Flip();
