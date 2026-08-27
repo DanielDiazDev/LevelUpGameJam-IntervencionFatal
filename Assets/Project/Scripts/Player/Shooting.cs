@@ -17,6 +17,9 @@ namespace Project.Scripts.Player
         [SerializeField] private float timeBetweenShots = 1.5f;
         [SerializeField] private InputReader inputReader;
         [SerializeField] private List<GameObject> projectilePrefabs;
+        [SerializeField] private Transform projectileContainer;
+        [Header("Animator")]
+        [SerializeField] private Animator animator;
         private int currentProjectileIndex = 0;
         private bool canFire;
         private float timer;
@@ -85,7 +88,7 @@ namespace Project.Scripts.Player
                 projectileOrigin.position = transform.position + direction * radiusShootOrigin;
                 var rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 projectileOrigin.rotation = Quaternion.Euler(0, 0, rotZ);
-                var projObj = Instantiate(projectilePrefabs[currentProjectileIndex]);
+                var projObj = Instantiate(projectilePrefabs[currentProjectileIndex], projectileContainer);
                 var proj = projObj.GetComponent<ProjectileBase>();
                 
                 proj.Initialize(currentProjectileIndex is 0 or 2 ? 
