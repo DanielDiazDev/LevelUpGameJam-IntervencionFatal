@@ -13,8 +13,14 @@ namespace Project.Scripts.Timer
         public const string PAST_SCENE = "Scene_Past_Test";
         public static TimeManager Instance;
         private Dictionary<string, GameObject> sceneRoots = new Dictionary<string, GameObject>();
-        [SerializeField] private Transform container;
+        [SerializeField] private Transform objectAffectedTime;
+        public Transform ObjectAffectedTime => objectAffectedTime;
        private int currentIndex;
+       public TimeState CurrentState { get; private set; }
+       private float timer;
+       [SerializeField] private float maxTimer = 2;
+       private bool canChangeTime;
+
        private void Start()
         {
             if (Instance == null)
@@ -25,14 +31,24 @@ namespace Project.Scripts.Timer
             {
                 Destroy(gameObject);
             }
+
+            timer = maxTimer;
         }
 
         private void Update()
         {
-            if (Keyboard.current.spaceKey.wasPressedThisFrame)
+            timer -= Time.deltaTime;
+            if (timer <= 0)
             {
+                canChangeTime = true;
+                
+            }
+            if (Keyboard.current.spaceKey.wasPressedThisFrame &&  canChangeTime)
+            {
+                canChangeTime = false;
                 currentIndex = (currentIndex + 1) % sceneRoots.Count;
                 SetActiveSceneRoot(sceneRoots.ElementAt(currentIndex).Key);
+                timer = maxTimer;
             }
         }
 
@@ -57,12 +73,12 @@ namespace Project.Scripts.Timer
             {
                 kvp.Value.SetActive(kvp.Key == sceneName);
             }
-            TimeState newState = sceneName == PAST_SCENE ? TimeState.Past : TimeState.Present;
-            NotifyChangeState(newState);
+            CurrentState = sceneName == PAST_SCENE ? TimeState.Past : TimeState.Present;
+            NotifyChangeState(CurrentState);
         }
         private void NotifyChangeState(TimeState state)
         {
-            foreach (var changeState in container.transform.GetComponentsInChildren<IChangeState>())
+            foreach (var changeState in objectAffectedTime.transform.GetComponentsInChildren<IChangeState>())
             {
                 changeState.ChangeState(state);
             }

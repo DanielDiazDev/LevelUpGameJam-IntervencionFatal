@@ -74,6 +74,14 @@ namespace Project.Scripts.Player
                 rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
         }
+        public void SetFacingDirection(bool faceRight)
+        {
+            if (faceRight != facingRight)
+            {
+                Flip();
+            }
+        }
+
         private void Flip()
         {
             facingRight = !facingRight;

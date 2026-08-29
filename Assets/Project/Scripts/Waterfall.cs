@@ -1,8 +1,11 @@
+using System;
 using Project.Scripts.Bullets;
+using Project.Scripts.Timer;
 using UnityEditor.Toolbars;
 using UnityEngine;
 
-public class Waterfall : BaseTimeTravelObject
+
+public class Waterfall : BaseTimeTravelObject, IChangeState
 {
     public bool StatePast; //false=liquid, true=solid
     public bool StateFuture; //false=liquid, true=solid
@@ -39,9 +42,22 @@ public class Waterfall : BaseTimeTravelObject
     {
         print("waterfall OnIce");
         base.OnIce();
+        if (TimeManager.Instance.CurrentState == TimeState.Past)
+        {
+            StatePast = true;
+            StateFuture = true;
+        }
+        else
+        {
+            StateFuture = true;
+            StatePast = false;
+            
+        }
+
         //TODO get if it's the past or future and set the variable
         // if (!GlobalTime) StatePast = true;
         // else StateFuture = true;
+       
         base.OnFuture(); //base.OnFuture shows solid version
     }
 
@@ -49,6 +65,16 @@ public class Waterfall : BaseTimeTravelObject
     {
         print("waterfall OnFire");
         base.OnFire();
+        if (TimeManager.Instance.CurrentState == TimeState.Present)
+        {
+            StatePast = true;
+            StateFuture = false;
+        }
+        else
+        {
+            StateFuture = false;
+            StatePast = false;
+        }
         //TODO get if it's the past or future and set the variable
         // if (!GlobalTime) StatePast = false;
         // else StateFuture = false;
@@ -67,5 +93,17 @@ public class Waterfall : BaseTimeTravelObject
         print("waterfall OnFuture");
         if (!StateFuture) base.OnPast();
         else base.OnFuture();
+    }
+
+    public void ChangeState(TimeState currentState)
+    {
+        if (currentState == TimeState.Past)
+        {
+            OnPast();
+        }
+        else
+        {
+            OnFuture();
+        }
     }
 }

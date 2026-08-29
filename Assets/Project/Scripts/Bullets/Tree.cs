@@ -1,92 +1,148 @@
-public class Tree : BaseTimeTravelObject
+using System;
+using Project.Scripts.Bullets;
+using Project.Scripts.Player;
+using Project.Scripts.Timer;
+using UnityEngine;
+
+public enum TreeState
 {
-    public ETreeState StatePast;
-    public ETreeState StateFuture;
+    None,
+    Seed,
+    Full,
+    Destroyed
+}
+public class Tree : BaseTimeTravelObject, IChangeState
+{
+    public TreeState pastState;
+    public TreeState futureState;
+    public Collider treeCollider;
+    
     void Start()
     {
-        SetState(ETreeState.SEED);
+        ColliderBridge projectileTriggerFuture = Future.GetComponentInChildren<ColliderBridge>(true);
+        projectileTriggerFuture.OnChildTriggerEnter += OnTreeFireHit;
+        treeCollider.enabled = false;
+        if (TimeManager.Instance.CurrentState == TimeState.Past)
+        {
+            pastState = TreeState.Seed;
+            futureState = TreeState.Full;
+        }
+        else
+        {
+            futureState = TreeState.Seed;
+            pastState = TreeState.None;
+        }
+    }
+
+    private void OnTreeFireHit(Collider collider)
+    {
+        if (collider.GetComponent<FireProjectile>())
+        {
+            OnFire();
+        }
+    }
+
+    //TODO move these to a parent class
+    public override void OnPast()
+    {
+        if (futureState == TreeState.Destroyed && pastState ==  TreeState.Destroyed)
+        {
+            Past.SetActive(false);
+            Future.SetActive(false);
+            treeCollider.enabled = false;
+        }
+        if (futureState == TreeState.Destroyed && pastState ==  TreeState.Full)
+        {
+            Past.SetActive(false);
+            Future.SetActive(true);
+            treeCollider.enabled = true;
+        }
+        if (futureState == TreeState.Full && pastState ==  TreeState.Full)
+        {
+            Past.SetActive(false);
+            Future.SetActive(true);
+            treeCollider.enabled = true;
+        }
+        if (futureState == TreeState.Full && pastState ==  TreeState.Seed)
+        {
+            Past.SetActive(true);
+            Future.SetActive(false);
+            treeCollider.enabled = false;
+        }
+        if (futureState == TreeState.Seed && pastState ==  TreeState.None)
+        {
+            Past.SetActive(false);
+            Future.SetActive(false);
+            treeCollider.enabled = false;
+        }
+    }
+
+    public override void OnFuture()
+    {
+        if (futureState == TreeState.Destroyed && pastState ==  TreeState.Full)
+        {
+            Past.SetActive(false);
+            Future.SetActive(false);
+            treeCollider.enabled = false;
+        }
+        if (futureState == TreeState.Full && pastState ==  TreeState.Full)
+        {
+            Past.SetActive(false);
+            Future.SetActive(true);
+            treeCollider.enabled = true;
+        }
+        if (futureState == TreeState.Full && pastState ==  TreeState.Seed)
+        {
+            Past.SetActive(false);
+            Future.SetActive(true);
+            treeCollider.enabled = true;
+        }
+        if (futureState == TreeState.Seed && pastState ==  TreeState.None)
+        {
+            Past.SetActive(true);
+            Future.SetActive(false);
+            treeCollider.enabled = false;
+        }
+       
     }
 
     public override void OnFire()
     {
+
+        if (TimeManager.Instance.CurrentState == TimeState.Past)
+        {
+            pastState = TreeState.Destroyed;
+            futureState = TreeState.Destroyed;
+            
+        }
+        else
+        {
+            futureState = TreeState.Destroyed;
+            pastState = TreeState.Full;
+        }
+        Future.SetActive(false);
+        
         //TODO animación de quemarse
-        //TODO aumentar semillas disponibles en el personaje SOLO si era un árbol plantado por el jugador, no si era uno del nivel
-        SetState(ETreeState.BURNED);
+        //TODO aumentar semillas disponibles en el personaje
+       // Destroy(this);
     }
 
-    void SetState(ETreeState state)
+    private void OnCollisionStay(Collision other)
     {
-        // if (GlobalTime) //TODO //we're in the past
+        if (other.gameObject.CompareTag("Player"))
         {
-            StatePast = state;
-            if (state == ETreeState.NOT_PLANTED)
+            if (other.gameObject.TryGetComponent(out PlayerController playerController))
             {
-                StateFuture = ETreeState.NOT_PLANTED;
-            }
-            else if (state == ETreeState.SEED)
-            {
-                StateFuture = ETreeState.TREE;
-            }
-            else if (state == ETreeState.BURNED)
-            {
-                StatePast = ETreeState.NOT_PLANTED;
+                playerController.Rb.AddForce(Vector3.right * 5f, ForceMode.Impulse);
             }
         }
-        // else //we're in the future
-        {
-            StateFuture = state;
-            // if (state == ETreeState.NOT_PLANTED)
-            // {
-            //     StatePast = ETreeState.NOT_PLANTED;
-            // }
-            // else if (state == ETreeState.SEED)
-            // {
-            //     StatePast = ETreeState.NOT_PLANTED;
-            // }
-            // else if (state == ETreeState.BURNED)
-            // {
-            //     StateFuture = ETreeState.NOT_PLANTED;
-            // }
-        }
-        ShowState();
     }
 
-    void ShowState()
+    public void ChangeState(TimeState currentState)
     {
-        ETreeState stateCurrent;
-        // if (GlobalTime) //we're in the past
-        {
-            stateCurrent = StatePast;
-        }
-        // else
-        {
-            stateCurrent = StateFuture;
-        }
-
-        if (stateCurrent == ETreeState.NOT_PLANTED)
-        {
-            Past.SetActive(false);
-            Future.SetActive(false);
-        }
-        else if (stateCurrent == ETreeState.SEED)
-        {
+        if (currentState == TimeState.Past)
             OnPast();
-        }
-        else if (stateCurrent == ETreeState.TREE)
-        {
+        else
             OnFuture();
-        }
-        else if (stateCurrent == ETreeState.BURNED)
-        {
-            // TODO add burned GameObject with 3d model
-        }
     }
-}
-
-public enum ETreeState
-{
-    NOT_PLANTED,
-    SEED,
-    TREE,
-    BURNED
 }

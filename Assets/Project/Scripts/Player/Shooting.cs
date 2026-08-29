@@ -25,6 +25,7 @@ namespace Project.Scripts.Player
         private float timer;
         private UnityEngine.Camera camera;
         private Vector3 mousePos;
+        private GameObject lastWindProjectile;
 
         private void OnEnable()
         {
@@ -58,6 +59,7 @@ namespace Project.Scripts.Player
                 }
             }
             ChangeWeapon();
+            crosshair.gameObject.SetActive(!(currentProjectileIndex is 1 or 3));
         }
 
         private void ChangeWeapon()
@@ -78,22 +80,36 @@ namespace Project.Scripts.Player
             crosshair.position = transform.position + direction * radiusCrosshair;
             var rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             crosshair.rotation = Quaternion.Euler(0, 0, rotZ);
+            if (currentProjectileIndex == 0 || currentProjectileIndex == 2) 
+            {
+                bool lookRight = mousePos.x > transform.position.x;
+                FindAnyObjectByType<PlayerController>().SetFacingDirection(lookRight);
+            }
         }
         private void OnShoot()
         {
             if (canFire)
             {
+                animator.Play("SelectSpelll");
                 canFire = false;
                 var direction = (mousePos - transform.position).normalized;
                 projectileOrigin.position = transform.position + direction * radiusShootOrigin;
                 var rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 projectileOrigin.rotation = Quaternion.Euler(0, 0, rotZ);
+                if (currentProjectileIndex == 1 && lastWindProjectile != null)
+                {
+                    Destroy(lastWindProjectile);
+                }
                 var projObj = Instantiate(projectilePrefabs[currentProjectileIndex], projectileContainer);
                 var proj = projObj.GetComponent<ProjectileBase>();
                 
                 proj.Initialize(currentProjectileIndex is 0 or 2 ? 
                     projectileOrigin.position : transform.position, direction);
-                
+
+                if (currentProjectileIndex == 1)
+                {
+                    lastWindProjectile = projObj;
+                }
             }
         }
     }
