@@ -19,7 +19,7 @@ namespace Project.Scripts.Timer
        public TimeState CurrentState { get; private set; }
        private float timer;
        [SerializeField] private float maxTimer = 2;
-       private bool canChangeTime;
+       private bool canChangeTime = true;
 
        private void Start()
         {
@@ -38,17 +38,18 @@ namespace Project.Scripts.Timer
         private void Update()
         {
             timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                canChangeTime = true;
-                
-            }
+            
             if (Keyboard.current.spaceKey.wasPressedThisFrame &&  canChangeTime)
             {
                 canChangeTime = false;
                 currentIndex = (currentIndex + 1) % sceneRoots.Count;
                 SetActiveSceneRoot(sceneRoots.ElementAt(currentIndex).Key);
                 timer = maxTimer;
+            }
+            if (timer <= 0 && !canChangeTime)
+            {
+                canChangeTime = true;
+                
             }
         }
 

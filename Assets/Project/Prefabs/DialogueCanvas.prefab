@@ -99,7 +99,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 2970173207034134012}
   - component: {fileID: 1689965212442016607}
   - component: {fileID: 4785519545439340551}
+  - component: {fileID: 8105377618054715498}
   m_Layer: 5
   m_Name: DialogueCanvas
   m_TagString: Untagged
@@ -241,6 +242,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8105377618054715498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3490846488073999725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca08d8a4685410c8dae59b502b4f1b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Project.Scripts.Dialogue.DialogueSystem
+  dialogues:
+  - Para hacer magia apreta click
+  - Cuidado no cambiar de tiempo no hay nada
+  dialoguePrefab: {fileID: 8345629338770827724}
+  dialogueText: {fileID: 5658984712973279913}
 --- !u!1 &7240652102535423760
 GameObject:
   m_ObjectHideFlags: 0
@@ -375,7 +393,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.61960787}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
