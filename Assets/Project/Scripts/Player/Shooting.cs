@@ -64,10 +64,11 @@ namespace Project.Scripts.Player
 
         private void ChangeWeapon()
         {
-            if (Keyboard.current.digit1Key.wasPressedThisFrame) currentProjectileIndex = 0; //Fuego
-            if (Keyboard.current.digit2Key.wasPressedThisFrame) currentProjectileIndex = 1; //Viento
-            if (Keyboard.current.digit3Key.wasPressedThisFrame) currentProjectileIndex = 2; //Hielo
-            if (Keyboard.current.digit4Key.wasPressedThisFrame) currentProjectileIndex = 3; //Semilla
+            if (Keyboard.current.digit1Key.wasPressedThisFrame) { currentProjectileIndex = 0; animator.SetTrigger("SelectSpell"); } //Fuego
+            if (Keyboard.current.digit2Key.wasPressedThisFrame) { currentProjectileIndex = 1; animator.SetTrigger("SelectSpell"); } //Viento
+            if (Keyboard.current.digit3Key.wasPressedThisFrame) { currentProjectileIndex = 2; animator.SetTrigger("SelectSpell"); } //Hielo
+            if (Keyboard.current.digit4Key.wasPressedThisFrame) { currentProjectileIndex = 3; animator.SetTrigger("SelectSpell"); } //Semilla
+            
         }
 
         private void UpdateCrossHairRotation()
@@ -90,7 +91,7 @@ namespace Project.Scripts.Player
         {
             if (canFire)
             {
-                animator.Play("SelectSpelll");
+                animator.Play("ThrowSpell");
                 canFire = false;
                 var direction = (mousePos - transform.position).normalized;
                 projectileOrigin.position = transform.position + direction * radiusShootOrigin;
