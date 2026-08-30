@@ -1575,6 +1575,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree
       objectReference: {fileID: 0}
+    - target: {fileID: 6931643263676183046, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7839770795782493771, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
       propertyPath: m_LocalPosition.x
       value: 48.49768
