@@ -133,7 +133,7 @@ public class Tree : BaseTimeTravelObject, IChangeState
         {
             if (other.gameObject.TryGetComponent(out PlayerController playerController))
             {
-                playerController.Rb.AddForce(Vector3.right * 5f, ForceMode.Impulse);
+                playerController.Rb.AddForce(Vector3.right * 20f, ForceMode.Impulse);
             }
         }
     }
