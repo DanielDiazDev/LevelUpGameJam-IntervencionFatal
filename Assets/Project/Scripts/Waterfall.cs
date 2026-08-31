@@ -45,19 +45,19 @@ public class Waterfall : BaseTimeTravelObject, IChangeState
         if (TimeManager.Instance.CurrentState == TimeState.Past)
         {
             StatePast = true;
-            StateFuture = true;
+            // StateFuture = true;
         }
         else
         {
             StateFuture = true;
-            StatePast = false;
-            
+            // StatePast = false;
+
         }
 
         //TODO get if it's the past or future and set the variable
         // if (!GlobalTime) StatePast = true;
         // else StateFuture = true;
-       
+
         base.OnFuture(); //base.OnFuture shows solid version
     }
 
@@ -67,13 +67,13 @@ public class Waterfall : BaseTimeTravelObject, IChangeState
         base.OnFire();
         if (TimeManager.Instance.CurrentState == TimeState.Present)
         {
-            StatePast = true;
+            // StatePast = true;
             StateFuture = false;
         }
         else
         {
             StateFuture = false;
-            StatePast = false;
+            // StatePast = false;
         }
         //TODO get if it's the past or future and set the variable
         // if (!GlobalTime) StatePast = false;
