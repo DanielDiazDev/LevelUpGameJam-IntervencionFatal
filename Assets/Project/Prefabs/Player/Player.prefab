@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Project.Scripts.Player.PlayerController
   moveSpeed: 10
+  airMoveSpeed: 2.5
   smoothness: 1
   jumpForce: 8
   isGrounded: 0
@@ -208,6 +209,7 @@ MonoBehaviour:
   - {fileID: 6931643263676183046, guid: 198df51095d24a94a95ea22cbaa62182, type: 3}
   projectileContainer: {fileID: 0}
   animator: {fileID: 8212808657866648533}
+  treePlacementRadius: 2
 --- !u!136 &7708636670332034474
 CapsuleCollider:
   m_ObjectHideFlags: 0

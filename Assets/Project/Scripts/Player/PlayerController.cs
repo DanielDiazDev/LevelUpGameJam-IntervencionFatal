@@ -9,6 +9,7 @@ namespace Project.Scripts.Player
     {
         [Header("Movement")]
         [SerializeField] private float moveSpeed = 5f;
+        [SerializeField] private float airMoveSpeed = 2f;
         [SerializeField, Range(0, 1f)] private float smoothness = 0.1f;
         private Vector2 moveInput;
         private bool facingRight = true;
@@ -28,13 +29,13 @@ namespace Project.Scripts.Player
         {
             inputReader.Initialize(); //TODO: Ponerlo luego en un manager
             inputReader.Move += OnMove;
-          //  inputReader.Jump += OnJump;
+            //  inputReader.Jump += OnJump;
         }
 
         private void OnDisable()
         {
             inputReader.Move -= OnMove;
-          //  inputReader.Jump -= OnJump;
+            //  inputReader.Jump -= OnJump;
         }
 
         private void Start()
@@ -55,7 +56,7 @@ namespace Project.Scripts.Player
         {
             CheckGrounded();
             // rb.linearVelocity = new Vector2(moveInput.x *  moveSpeed, rb.linearVelocity.y);
-            Vector2 targetVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+            Vector2 targetVelocity = new Vector2(moveInput.x * (isGrounded ? moveSpeed : airMoveSpeed), rb.linearVelocity.y);
             rb.linearVelocity = Vector2.Lerp(rb.linearVelocity, targetVelocity, smoothness);
         }
 
