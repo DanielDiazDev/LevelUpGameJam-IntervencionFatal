@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private FadeScreen FadeScreen;
     [SerializeField] private Collider DeathTrigger;
+    [SerializeField] private ColliderBridge ExitPortal;
     private bool IsFading;
     private PlayerController Player;
 
@@ -14,20 +15,34 @@ public class LevelManager : MonoBehaviour
     {
         FadeScreen.FadeToImage();
         Player = FindAnyObjectByType<PlayerController>();
+        ExitPortal.OnChildTriggerEnter += OnPortalTriggerEnter;
 
     }
 
     public void ReloadScene()
     {
-        StartCoroutine(ReloadSceneCoroutine());
+        StartCoroutine(ReloadSceneCoroutine(SceneManager.GetActiveScene().name));
     }
 
-    private IEnumerator ReloadSceneCoroutine()
+    public void LoadMainMenu()
+    {
+        StartCoroutine(ReloadSceneCoroutine("Scene_MainMenu"));
+    }
+
+    private void OnPortalTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PlayerController>())
+        {
+            LoadMainMenu();
+        }
+    }
+
+    private IEnumerator ReloadSceneCoroutine(string name)
     {
         IsFading = true;
         FadeScreen.FadeToBlack();
         yield return new WaitUntil(() => FadeScreen.IsFinished);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(name);
     }
 
     void Update()
