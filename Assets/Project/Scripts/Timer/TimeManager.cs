@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -20,6 +21,18 @@ namespace Project.Scripts.Timer
         private float timer;
         [SerializeField] private float maxTimer = 2;
         private bool canChangeTime;
+        [SerializeField]private Color originalSkyTint = new Color(128, 128, 128);
+        [SerializeField] private Color skyTint = Color.gray;
+        [SerializeField] private GameObject portalPrefab;
+        [SerializeField] private Transform player;
+
+        private void OnDestroy()
+        {
+            if (RenderSettings.skybox != null)
+            {
+                RenderSettings.skybox.SetColor("_Tint", originalSkyTint);
+            }
+        }
 
         private void Start()
         {
@@ -32,6 +45,10 @@ namespace Project.Scripts.Timer
                 Destroy(gameObject);
             }
 
+            if (RenderSettings.skybox != null)
+            {
+                RenderSettings.skybox.SetColor("_Tint", originalSkyTint);
+            }
             timer = maxTimer;
         }
 
@@ -45,10 +62,27 @@ namespace Project.Scripts.Timer
             }
             if (Keyboard.current.spaceKey.wasPressedThisFrame && canChangeTime)
             {
+                StartCoroutine(GeneratePortal());
                 canChangeTime = false;
                 currentIndex = (currentIndex + 1) % sceneRoots.Count;
                 SetActiveSceneRoot(sceneRoots.ElementAt(currentIndex).Key);
                 timer = maxTimer;
+                if (currentIndex == 0)
+                {
+                    if (RenderSettings.skybox != null)
+                    {
+                        RenderSettings.skybox.SetColor("_Tint", originalSkyTint);
+                    }
+                }
+                else
+                {
+                    if (RenderSettings.skybox != null)
+                    {
+                        originalSkyTint = RenderSettings.skybox.GetColor("_Tint");
+
+                        RenderSettings.skybox.SetColor("_Tint", skyTint);
+                    }
+                }
             }
             if (timer <= 0 && !canChangeTime)
             {
@@ -57,6 +91,12 @@ namespace Project.Scripts.Timer
             }
         }
 
+        private IEnumerator GeneratePortal()
+        {
+            var go = Instantiate(portalPrefab, new Vector3(player.position.x, player.position.y + 1.5f, player.position.z), Quaternion.identity);
+            yield return new WaitForSeconds(0.5f);
+            Destroy(go);
+        }
         public void RegisterSceneRoot(string sceneName)
         {
             Scene scene = SceneManager.GetSceneByName(sceneName);

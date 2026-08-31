@@ -818,6 +818,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Scripts.Manager.TimeManager
   objectAffectedTime: {fileID: 117112458}
   maxTimer: 2
+  originalSkyTint: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
+  skyTint: {r: 0.3056603, g: 0.21165535, b: 0.21165535, a: 1}
+  portalPrefab: {fileID: 1082321093931166748, guid: 751ca713f1aafc04ea5287db7516d563, type: 3}
+  player: {fileID: 463078361}
 --- !u!1001 &722196077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1722,7 +1726,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 300942641191870050, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3.1424
+      value: 0.0028448694
+      objectReference: {fileID: 0}
+    - target: {fileID: 300942641191870050, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1104389262879188366, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_IsActive
