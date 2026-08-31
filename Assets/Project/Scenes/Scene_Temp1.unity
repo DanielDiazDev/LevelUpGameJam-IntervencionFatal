@@ -1361,21 +1361,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 664702667}
     m_Modifications:
+    - target: {fileID: 1104389262879188366, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5767420851465503381, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_Name
       value: Waterfall (2)
       objectReference: {fileID: 0}
     - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.6089787
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.6089787
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.6089787
+      objectReference: {fileID: 0}
+    - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.5463
+      value: -6.79
       objectReference: {fileID: 0}
     - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.06999999
+      value: 1.0284
       objectReference: {fileID: 0}
     - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.53647
+      value: -1.0698
       objectReference: {fileID: 0}
     - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2006,6 +2022,10 @@ PrefabInstance:
     - target: {fileID: 5767420851465503381, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_Name
       value: Waterfall (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5767420851465503381, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
       propertyPath: m_LocalPosition.x
