@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 077ff797d0dfbef498294e33df7f71d2, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -966,6 +966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   FadeScreen: {fileID: 1565614135}
+  DeathTrigger: {fileID: 894824875}
 --- !u!4 &788078715
 Transform:
   m_ObjectHideFlags: 0
@@ -1051,6 +1052,59 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7015444138543202161, guid: 9e8c103b98d616f4a99b6e263d1afbe4, type: 3}
   m_PrefabInstance: {fileID: 839900801}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &894824874
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 894824876}
+  - component: {fileID: 894824875}
+  m_Layer: 0
+  m_Name: DeathTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &894824875
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894824874}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 110.69809, y: 1, z: 41.97052}
+  m_Center: {x: 20.713745, y: 0, z: 0}
+--- !u!4 &894824876
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894824874}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -20.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1070326212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1753,7 +1807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 485135156550633298, guid: 2ae90d9bf7a37a544867a465021baeb0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1717974534210059804, guid: 2ae90d9bf7a37a544867a465021baeb0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2457,6 +2511,7 @@ SceneRoots:
   - {fileID: 730070030}
   - {fileID: 719791510}
   - {fileID: 788078715}
+  - {fileID: 894824876}
   - {fileID: 1565614134}
   - {fileID: 2111134741}
   - {fileID: 117112458}
