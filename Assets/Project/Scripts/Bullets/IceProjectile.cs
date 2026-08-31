@@ -6,7 +6,7 @@ namespace Project.Scripts.Bullets
     {
         private void OnTriggerEnter(Collider other)
         {
-            Debug.Log("ice hit: " + other.gameObject.name);
+            base.OnTriggerEnter(other);
         }
     }
 }

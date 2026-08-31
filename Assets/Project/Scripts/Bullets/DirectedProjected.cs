@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Project.Scripts.Bullets
 {
@@ -13,6 +14,23 @@ namespace Project.Scripts.Bullets
             transform.position = origin;
             rb.linearVelocity = dir.normalized * speed;
         }
-        
+
+        public virtual void OnTriggerEnter(Collider other)
+        {
+            // print(this + "trig / " + other);
+            StartCoroutine(DestroyDeferred());
+        }
+
+        public virtual void OnCollisionEnter(Collision collision)
+        {
+            // print(this + "coll");
+        }
+
+        private IEnumerator DestroyDeferred()
+        {
+            yield return null;
+            Destroy(gameObject);
+        }
+
     }
 }
