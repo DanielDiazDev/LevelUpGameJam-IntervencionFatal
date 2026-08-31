@@ -25,13 +25,16 @@ namespace Project.Scripts.Timer
         [SerializeField] private Color skyTint = Color.gray;
         [SerializeField] private GameObject portalPrefab;
         [SerializeField] private Transform player;
-
+        
+        [SerializeField] private Color originalTileColor;
+        [SerializeField] private Color newTileColor;
         private void OnDestroy()
         {
             if (RenderSettings.skybox != null)
             {
                 RenderSettings.skybox.SetColor("_Tint", originalSkyTint);
             }
+            UpdateTilesColor(originalTileColor);
         }
 
         private void Start()
@@ -49,11 +52,13 @@ namespace Project.Scripts.Timer
             {
                 RenderSettings.skybox.SetColor("_Tint", originalSkyTint);
             }
+            UpdateTilesColor(originalTileColor);
             timer = maxTimer;
         }
 
         private void Update()
         {
+            
             timer -= Time.deltaTime;
             if (timer <= 0)
             {
@@ -72,6 +77,7 @@ namespace Project.Scripts.Timer
                     if (RenderSettings.skybox != null)
                     {
                         RenderSettings.skybox.SetColor("_Tint", originalSkyTint);
+                        UpdateTilesColor(originalTileColor);
                     }
                 }
                 else
@@ -81,6 +87,7 @@ namespace Project.Scripts.Timer
                         originalSkyTint = RenderSettings.skybox.GetColor("_Tint");
 
                         RenderSettings.skybox.SetColor("_Tint", skyTint);
+                        UpdateTilesColor(newTileColor);
                     }
                 }
             }
@@ -90,13 +97,54 @@ namespace Project.Scripts.Timer
 
             }
         }
+        private void UpdateTilesColor(Color targetColor)
+        {
+            GameObject[] tiles = GameObject.FindGameObjectsWithTag("Tile");
+            foreach (var tile in tiles)
+            {
+                var renderer = tile.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                {
+                    renderer.material.color = targetColor;
+                }
+            }
+        }
 
         private IEnumerator GeneratePortal()
         {
-            var go = Instantiate(portalPrefab, new Vector3(player.position.x, player.position.y + 1.5f, player.position.z), Quaternion.identity);
-            yield return new WaitForSeconds(0.5f);
+            var go = Instantiate(portalPrefab, 
+                new Vector3(player.position.x, player.position.y + 1.5f, player.position.z - -0.87967f), 
+                Quaternion.identity);
+
+            Transform portalTransform = go.transform;
+            portalTransform.localScale = Vector3.zero;
+
+            float duration = 0.3f; 
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+                portalTransform.localScale = Vector3.Lerp(Vector3.zero, Vector3.one * 2f, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            portalTransform.localScale = Vector3.one * 2f;
+
+            elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+                float t = elapsed / duration;
+                portalTransform.localScale = Vector3.Lerp(Vector3.one * 2f, Vector3.zero, t);
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+            portalTransform.localScale = Vector3.zero;
+
             Destroy(go);
         }
+
         public void RegisterSceneRoot(string sceneName)
         {
             Scene scene = SceneManager.GetSceneByName(sceneName);

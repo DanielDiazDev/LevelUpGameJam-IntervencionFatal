@@ -698,6 +698,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tree
       objectReference: {fileID: 0}
+    - target: {fileID: 7590728569898247621, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
+      propertyPath: m_Size.y
+      value: 2.887807
+      objectReference: {fileID: 0}
+    - target: {fileID: 7590728569898247621, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
+      propertyPath: m_Center.y
+      value: 4.855516
+      objectReference: {fileID: 0}
     - target: {fileID: 7839770795782493771, guid: c7861000df541b24eb6dd2e818026b17, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -820,8 +828,10 @@ MonoBehaviour:
   maxTimer: 2
   originalSkyTint: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0.5019608}
   skyTint: {r: 0.3056603, g: 0.21165535, b: 0.21165535, a: 1}
-  portalPrefab: {fileID: 1082321093931166748, guid: 751ca713f1aafc04ea5287db7516d563, type: 3}
+  portalPrefab: {fileID: 5372337289654449294, guid: d7dcc9ecd5d0aae4ead7a2b71d427abc, type: 3}
   player: {fileID: 463078361}
+  originalTileColor: {r: 1, g: 1, b: 1, a: 1}
+  newTileColor: {r: 0.4566037, g: 0.44368097, b: 0.44368097, a: 0}
 --- !u!1001 &722196077
 PrefabInstance:
   m_ObjectHideFlags: 0
