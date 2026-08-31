@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Project.Scripts.Bullets;
 using Project.Scripts.Input;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace Project.Scripts.Player
         private UnityEngine.Camera camera;
         private Vector3 mousePos;
         private GameObject lastWindProjectile;
-
+        [SerializeField] private float treePlacementRadius = 2f;
         private void OnEnable()
         {
             inputReader.Attack += OnShoot;
@@ -89,11 +90,20 @@ namespace Project.Scripts.Player
         }
         private void OnShoot()
         {
+            if (currentProjectileIndex == 3)
+            {
+                if (!CanPlaceTree())
+                {
+                    Debug.Log("No puede colcoar arbol"); 
+                    return;
+                }
+            }
             if (canFire)
             {
                 animator.Play("ThrowSpell");
                 canFire = false;
                 var direction = (mousePos - transform.position).normalized;
+                
                 projectileOrigin.position = transform.position + direction * radiusShootOrigin;
                 var rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 projectileOrigin.rotation = Quaternion.Euler(0, 0, rotZ);
@@ -113,5 +123,37 @@ namespace Project.Scripts.Player
                 }
             }
         }
+        private bool CanPlaceTree()
+        {
+            Vector3 treePosition = GetTreePlacementPosition();
+
+            Collider[] colliders = Physics.OverlapSphere(
+                treePosition,
+                treePlacementRadius
+            );
+
+            foreach (Collider collider in colliders)
+            {
+                Tree tree = collider.GetComponentInParent<Tree>();
+
+                if (tree != null)
+                    return false;
+            }
+
+            return true;
+        }
+        private Vector3 GetTreePlacementPosition()
+        {
+            Vector3 direction = (mousePos - transform.position).normalized;
+
+            int side = (int)Mathf.Sign(direction.x);
+
+            return transform.position + new Vector3(
+                side * 1f,
+                0f,
+                0f
+            );
+        }
     }
+    
 }
