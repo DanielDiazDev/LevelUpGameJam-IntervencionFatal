@@ -9,19 +9,19 @@ namespace Project.Scripts.Timer
 {
     public class TimeManager : MonoBehaviour
     {
-        public const string PRESENT_SCENE =  "Scene_Present_Test";
-        public const string PAST_SCENE = "Scene_Past_Test";
+        public const string PRESENT_SCENE = "Scene_Present";
+        public const string PAST_SCENE = "Scene_Past";
         public static TimeManager Instance;
         private Dictionary<string, GameObject> sceneRoots = new Dictionary<string, GameObject>();
         [SerializeField] private Transform objectAffectedTime;
         public Transform ObjectAffectedTime => objectAffectedTime;
-       private int currentIndex;
-       public TimeState CurrentState { get; private set; }
-       private float timer;
-       [SerializeField] private float maxTimer = 2;
-       private bool canChangeTime;
+        private int currentIndex;
+        public TimeState CurrentState { get; private set; }
+        private float timer;
+        [SerializeField] private float maxTimer = 2;
+        private bool canChangeTime;
 
-       private void Start()
+        private void Start()
         {
             if (Instance == null)
             {
@@ -41,9 +41,9 @@ namespace Project.Scripts.Timer
             if (timer <= 0)
             {
                 canChangeTime = true;
-                
+
             }
-            if (Keyboard.current.spaceKey.wasPressedThisFrame &&  canChangeTime)
+            if (Keyboard.current.spaceKey.wasPressedThisFrame && canChangeTime)
             {
                 canChangeTime = false;
                 currentIndex = (currentIndex + 1) % sceneRoots.Count;

@@ -858,6 +858,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Tree
   Past: {fileID: 1045683139836272955}
   Future: {fileID: 8855069736221942214}
+  IsLevelOwned: 0
   pastState: 0
   futureState: 0
   treeCollider: {fileID: 6295971585491606267}
@@ -878,7 +879,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5000001
   m_Height: 2

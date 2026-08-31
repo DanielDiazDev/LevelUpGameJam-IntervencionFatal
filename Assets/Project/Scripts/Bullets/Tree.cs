@@ -13,24 +13,35 @@ public enum TreeState
 }
 public class Tree : BaseTimeTravelObject, IChangeState
 {
+    [SerializeField] private bool IsLevelOwned = false;
     public TreeState pastState;
     public TreeState futureState;
     public Collider treeCollider;
-    
+
     void Start()
     {
         ColliderBridge projectileTriggerFuture = Future.GetComponentInChildren<ColliderBridge>(true);
         projectileTriggerFuture.OnChildTriggerEnter += OnTreeFireHit;
         treeCollider.enabled = false;
-        if (TimeManager.Instance.CurrentState == TimeState.Past)
+        if (!IsLevelOwned)
         {
-            pastState = TreeState.Seed;
-            futureState = TreeState.Full;
+            if (TimeManager.Instance.CurrentState == TimeState.Past)
+            {
+                pastState = TreeState.Seed;
+                futureState = TreeState.Full;
+                OnPast();
+            }
+            else
+            {
+                futureState = TreeState.Seed;
+                pastState = TreeState.None;
+                OnFuture();
+            }
         }
         else
         {
-            futureState = TreeState.Seed;
-            pastState = TreeState.None;
+            pastState = TreeState.Seed;
+            futureState = TreeState.Full;
         }
     }
 
@@ -45,31 +56,37 @@ public class Tree : BaseTimeTravelObject, IChangeState
     //TODO move these to a parent class
     public override void OnPast()
     {
-        if (futureState == TreeState.Destroyed && pastState ==  TreeState.Destroyed)
+        if (futureState == TreeState.Destroyed && pastState == TreeState.Destroyed)
         {
             Past.SetActive(false);
             Future.SetActive(false);
             treeCollider.enabled = false;
         }
-        if (futureState == TreeState.Destroyed && pastState ==  TreeState.Full)
+        if (futureState == TreeState.Destroyed && pastState == TreeState.Full)
         {
             Past.SetActive(false);
             Future.SetActive(true);
             treeCollider.enabled = true;
         }
-        if (futureState == TreeState.Full && pastState ==  TreeState.Full)
-        {
-            Past.SetActive(false);
-            Future.SetActive(true);
-            treeCollider.enabled = true;
-        }
-        if (futureState == TreeState.Full && pastState ==  TreeState.Seed)
+        if (futureState == TreeState.Destroyed && pastState == TreeState.Seed)
         {
             Past.SetActive(true);
             Future.SetActive(false);
             treeCollider.enabled = false;
         }
-        if (futureState == TreeState.Seed && pastState ==  TreeState.None)
+        if (futureState == TreeState.Full && pastState == TreeState.Full)
+        {
+            Past.SetActive(false);
+            Future.SetActive(true);
+            treeCollider.enabled = true;
+        }
+        if (futureState == TreeState.Full && pastState == TreeState.Seed)
+        {
+            Past.SetActive(true);
+            Future.SetActive(false);
+            treeCollider.enabled = false;
+        }
+        if (futureState == TreeState.Seed && pastState == TreeState.None)
         {
             Past.SetActive(false);
             Future.SetActive(false);
@@ -79,31 +96,37 @@ public class Tree : BaseTimeTravelObject, IChangeState
 
     public override void OnFuture()
     {
-        if (futureState == TreeState.Destroyed && pastState ==  TreeState.Full)
+        if (futureState == TreeState.Destroyed && pastState == TreeState.Full)
         {
             Past.SetActive(false);
             Future.SetActive(false);
             treeCollider.enabled = false;
         }
-        if (futureState == TreeState.Full && pastState ==  TreeState.Full)
+        if (futureState == TreeState.Destroyed && pastState == TreeState.Seed)
+        {
+            Past.SetActive(false);
+            Future.SetActive(false);
+            treeCollider.enabled = false;
+        }
+        if (futureState == TreeState.Full && pastState == TreeState.Full)
         {
             Past.SetActive(false);
             Future.SetActive(true);
             treeCollider.enabled = true;
         }
-        if (futureState == TreeState.Full && pastState ==  TreeState.Seed)
+        if (futureState == TreeState.Full && pastState == TreeState.Seed)
         {
             Past.SetActive(false);
             Future.SetActive(true);
             treeCollider.enabled = true;
         }
-        if (futureState == TreeState.Seed && pastState ==  TreeState.None)
+        if (futureState == TreeState.Seed && pastState == TreeState.None)
         {
             Past.SetActive(true);
             Future.SetActive(false);
             treeCollider.enabled = false;
         }
-       
+
     }
 
     public override void OnFire()
@@ -113,18 +136,19 @@ public class Tree : BaseTimeTravelObject, IChangeState
         {
             pastState = TreeState.Destroyed;
             futureState = TreeState.Destroyed;
-            
+
         }
         else
         {
             futureState = TreeState.Destroyed;
-            pastState = TreeState.Full;
+            // pastState = TreeState.Destroyed;
         }
         Future.SetActive(false);
-        
+        treeCollider.enabled = false;
+
         //TODO animación de quemarse
         //TODO aumentar semillas disponibles en el personaje
-       // Destroy(this);
+        // Destroy(this);
     }
 
     private void OnCollisionStay(Collision other)
