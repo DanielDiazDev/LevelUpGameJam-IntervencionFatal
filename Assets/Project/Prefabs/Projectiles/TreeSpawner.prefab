@@ -44,4 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9fb21297823ea9489aa06319b33c495, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TreeProjectile
+  xPosition: 1
+  yPosition: 0
+  RaycastMask:
+    serializedVersion: 2
+    m_Bits: 8
   TreePrefab: {fileID: 8052608326017711405, guid: c7861000df541b24eb6dd2e818026b17, type: 3}

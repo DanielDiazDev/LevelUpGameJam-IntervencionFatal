@@ -1,6 +1,6 @@
-using UnityEngine;
 using Project.Scripts.Bullets;
 using Project.Scripts.Timer;
+using UnityEngine;
 
 public class TreeProjectile : SpawnedProjectile
 {
@@ -9,6 +9,6 @@ public class TreeProjectile : SpawnedProjectile
     void Start()
     {
         Tree instance = Instantiate(TreePrefab, transform.position, Quaternion.identity, TimeManager.Instance.ObjectAffectedTime);
-        Destroy(this);
+        Destroy(gameObject);
     }
 }

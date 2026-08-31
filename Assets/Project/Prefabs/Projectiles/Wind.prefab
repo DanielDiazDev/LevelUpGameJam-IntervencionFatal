@@ -108,10 +108,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Project.Scripts.Bullets.Wind
   xPosition: 1
   yPosition: 0.2
+  RaycastMask:
+    serializedVersion: 2
+    m_Bits: 8
   liftForce: 5
   levitateAmplitude: 0.5
   levitateFrequency: 2
-  playerHeightMultiplier: 3
+  playerHeightMultiplier: 2.8
   maxTimer: 5
 --- !u!65 &1159944781178371298
 BoxCollider:

@@ -33,20 +33,21 @@ namespace Project.Scripts.Bullets
 
         private void OnTriggerEnter(Collider other)
         {
-                if (other.CompareTag("Player") && other.TryGetComponent(out PlayerController playerController))
+            if (other.CompareTag("Player") && other.TryGetComponent(out PlayerController playerController))
+            {
+                float targetHeight;
+                if (!playerMaxHeights.ContainsKey(playerController))
                 {
-                    float targetHeight;
-                    if (!playerMaxHeights.ContainsKey(playerController))
-                    {
-                        float playerHeight = other.bounds.size.y;
-                         targetHeight = other.transform.position.y + playerHeight * playerHeightMultiplier;
-                        playerMaxHeights[playerController] = targetHeight;
-                    }
-                    targetHeight = playerMaxHeights[playerController];
-                    liftCoroutine = StartCoroutine(LiftPlayer(playerController, targetHeight));
+                    float playerHeight = other.bounds.size.y;
+                    //  targetHeight = other.transform.position.y + playerHeight * playerHeightMultiplier;
+                    targetHeight = transform.position.y + playerHeight * playerHeightMultiplier;
+                    playerMaxHeights[playerController] = targetHeight;
                 }
+                targetHeight = playerMaxHeights[playerController];
+                liftCoroutine = StartCoroutine(LiftPlayer(playerController, targetHeight));
+            }
         }
-       
+
         private IEnumerator LiftPlayer(PlayerController player, float targetHeight)
         {
             Rigidbody playerRb = player.Rb;
@@ -73,12 +74,12 @@ namespace Project.Scripts.Bullets
         }
         private void OnTriggerExit(Collider other)
         {
-          
-                if (other.CompareTag("Player") && other.TryGetComponent(out PlayerController playerController))
-                {
-                    StopCoroutine(liftCoroutine);
-                    playerController.Rb.linearVelocity = Vector3.zero;
-                }
+
+            if (other.CompareTag("Player") && other.TryGetComponent(out PlayerController playerController))
+            {
+                StopCoroutine(liftCoroutine);
+                playerController.Rb.linearVelocity = Vector3.zero;
+            }
         }
     }
 }
