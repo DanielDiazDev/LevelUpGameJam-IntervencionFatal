@@ -50,6 +50,11 @@ namespace Project.Scripts.Timer
                 SetActiveSceneRoot(sceneRoots.ElementAt(currentIndex).Key);
                 timer = maxTimer;
             }
+            if (timer <= 0 && !canChangeTime)
+            {
+                canChangeTime = true;
+
+            }
         }
 
         public void RegisterSceneRoot(string sceneName)
