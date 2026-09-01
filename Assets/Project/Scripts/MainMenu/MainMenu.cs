@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button optionsButton;
+    [SerializeField] private GameObject optionsPanel;
 
     private void Start()
     {
@@ -23,7 +24,7 @@ public class MainMenu : MonoBehaviour
 
     private void Options()
     {
-        
+        optionsPanel.SetActive(true);
     }
 
     private void StartGame()

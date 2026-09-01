@@ -36,11 +36,11 @@ public class Tree : BaseTimeTravelObject, IChangeState
                 OnFuture();
             }
         }
-        else
-        {
-            pastState = TreeState.Seed;
-            futureState = TreeState.Full;
-        }
+        // else
+        // {
+        //     pastState = TreeState.Seed;
+        //     futureState = TreeState.Full;
+        // }
     }
 
     private void OnTreeFireHit(Collider collider)

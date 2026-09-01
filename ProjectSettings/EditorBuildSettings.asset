@@ -17,10 +17,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Project/Scenes/Scene_Past.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Project/Scenes/Scene_Past_Test.unity
     guid: 04728115a16c4eb4193e042ed6555f8f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Project/Scenes/Scene_Present_Test.unity
     guid: f851d53ec962db54b81326827aa78cfb
   m_configObjects:
