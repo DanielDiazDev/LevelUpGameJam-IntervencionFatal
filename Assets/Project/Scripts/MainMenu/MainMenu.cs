@@ -16,8 +16,7 @@ public class MainMenu : MonoBehaviour
         startButton.onClick.AddListener(StartGame);
         optionsButton.onClick.AddListener(Options);
         exitButton.onClick.AddListener(Exit);
-        optionsBackButton.onClick.AddListener(OptionsBack);
-        optionsButton.SetActive(false);
+        
     }
 
     private void Exit()
@@ -28,6 +27,7 @@ public class MainMenu : MonoBehaviour
     private void Options()
     {
         optionsPanel.SetActive(true);
+        optionsButton.onClick.AddListener(OptionsBack);
     }
 
     private void OptionsBack()

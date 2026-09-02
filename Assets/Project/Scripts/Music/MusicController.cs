@@ -7,11 +7,12 @@ namespace Project.Scripts.Music
 {
     public class MusicController : MonoBehaviour
     {
+        [SerializeField] private EventReference musicEvent;
         private EventInstance musicInstance;
 
-        private void Create(string path)
+        private void Create()
         {
-            musicInstance = RuntimeManager.CreateInstance(path);
+            musicInstance = RuntimeManager.CreateInstance(musicEvent);
             musicInstance.start();
         }
 
