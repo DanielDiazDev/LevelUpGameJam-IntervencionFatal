@@ -7,24 +7,29 @@ namespace Project.Scripts.Music
 {
     public class MusicController : MonoBehaviour
     {
-        [SerializeField] private EventReference musicEvent;
-        private EventInstance musicInstance;
+        public static MusicController instance;
+        [SerializeField] private StudioEventEmitter emitter;
 
-        private void Create()
+        private void Awake()
         {
-            musicInstance = RuntimeManager.CreateInstance(musicEvent);
-            musicInstance.start();
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void SetParameter(string key, float value)
         {
-          musicInstance.setParameterByName(key, value);   
+            value = Mathf.Clamp(value, 0, 1);
+            
+            emitter.SetParameter(key, value);
+          
         }
 
-        private void OnDestroy()
-        {
-            musicInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            musicInstance.release();
-        }
+       
     }
 }

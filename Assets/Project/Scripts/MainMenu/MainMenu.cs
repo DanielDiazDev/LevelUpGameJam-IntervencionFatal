@@ -27,10 +27,10 @@ public class MainMenu : MonoBehaviour
     private void Options()
     {
         optionsPanel.SetActive(true);
-        optionsButton.onClick.AddListener(OptionsBack);
+       // optionsButton.onClick.AddListener(OptionsBack);
     }
 
-    private void OptionsBack()
+    public void OptionsBack()
     {
         optionsPanel.SetActive(false);
     }

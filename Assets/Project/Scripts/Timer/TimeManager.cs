@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Project.Scripts.Music;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -79,6 +80,7 @@ namespace Project.Scripts.Timer
                         RenderSettings.skybox.SetColor("_Tint", originalSkyTint);
                         UpdateTilesColor(originalTileColor);
                     }
+                    MusicController.instance.SetParameter("Pasado", 0);
                 }
                 else
                 {
@@ -88,6 +90,7 @@ namespace Project.Scripts.Timer
 
                         RenderSettings.skybox.SetColor("_Tint", skyTint);
                         UpdateTilesColor(newTileColor);
+                        MusicController.instance.SetParameter("Pasado", 1);
                     }
                 }
             }
