@@ -1,4 +1,5 @@
 using System.Collections;
+using Project.Scripts.Music;
 using Project.Scripts.Player;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -33,6 +34,7 @@ public class LevelManager : MonoBehaviour
     {
         if (other.GetComponent<PlayerController>())
         {
+            MusicController.instance.SetParameter("ENd", 1);
             LoadMainMenu();
         }
     }
